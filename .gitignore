@@ -2,3 +2,4 @@ flashrom/*
 nuttx/*
 manifesto/*
 log.build
+arm/*
