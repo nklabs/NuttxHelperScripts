@@ -1,0 +1,95 @@
+diff --git a/.gitignore b/.gitignore
+index a98f114..af02889 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -17,4 +17,4 @@ misc/tools/kconfig-frontends
+ build
+ nuttx/configs/ara/common/src/ara_build_info_priv.h
+ doc
+-
++apps/ara/nklabs/*
+diff --git a/apps/ara/Kconfig b/apps/ara/Kconfig
+index 7d75665..f5addd0 100644
+--- a/apps/ara/Kconfig
++++ b/apps/ara/Kconfig
+@@ -48,3 +48,4 @@ source "$APPSDIR/ara/gb_loopback/Kconfig"
+ source "$APPSDIR/ara/i2s/Kconfig"
+ source "$APPSDIR/ara/bringup_entry/Kconfig"
+ source "$APPSDIR/ara/service_mgr/Kconfig"
++source "$APPSDIR/ara/nklabs/Kconfig"
+diff --git a/apps/ara/Make.defs b/apps/ara/Make.defs
+index 370c6c0..8370534 100644
+--- a/apps/ara/Make.defs
++++ b/apps/ara/Make.defs
+@@ -134,3 +134,15 @@ endif
+ ifeq ($(CONFIG_SERVICE_MANAGER),y)
+ CONFIGURED_APPS += ara/service_mgr
+ endif
++
++ifeq ($(CONFIG_NKLABS_LAB1),y)
++CONFIGURED_APPS += ara/nklabs/lab1
++endif
++
++ifeq ($(CONFIG_NKLABS_LAB2),y)
++CONFIGURED_APPS += ara/nklabs/lab2
++endif
++
++ifeq ($(CONFIG_NKLABS_LAB3),y)
++CONFIGURED_APPS += ara/nklabs/lab3
++endif
+diff --git a/apps/ara/Makefile b/apps/ara/Makefile
+index d1eafa8..4b3fa97 100644
+--- a/apps/ara/Makefile
++++ b/apps/ara/Makefile
+@@ -82,6 +82,7 @@ SUBDIRS += svc
+ SUBDIRS += svc_power
+ SUBDIRS += unipro
+ SUBDIRS += usb-host
++SUBDIRS += nklabs
+ 
+ # Sub-directories that might need context setup.  Directories may need
+ # context setup for a variety of reasons, but the most common is because
+@@ -105,6 +106,7 @@ CNTXTDIRS += svc
+ CNTXTDIRS += svc_power
+ CNTXTDIRS += unipro
+ CNTXTDIRS += usb-host
++CNTXTDIRS += nklabs
+ endif
+ 
+ all: nothing
+diff --git a/nuttx/configs/ara/bridge/es1-debug-apbridgea/defconfig b/nuttx/configs/ara/bridge/es1-debug-apbridgea/defconfig
+index d498b2e..f560bea 100644
+--- a/nuttx/configs/ara/bridge/es1-debug-apbridgea/defconfig
++++ b/nuttx/configs/ara/bridge/es1-debug-apbridgea/defconfig
+@@ -237,7 +237,7 @@ CONFIG_DISABLE_OS_API=y
+ # CONFIG_DISABLE_POSIX_TIMERS is not set
+ # CONFIG_DISABLE_PTHREAD is not set
+ # CONFIG_DISABLE_SIGNALS is not set
+-CONFIG_DISABLE_MQUEUE=y
++# CONFIG_DISABLE_MQUEUE is not set
+ CONFIG_DISABLE_ENVIRON=y
+ 
+ #
+@@ -312,6 +312,12 @@ CONFIG_SIG_SIGCONDTIMEDOUT=16
+ CONFIG_SIG_SIGWORK=17
+ 
+ #
++# POSIX Message Queue Options
++#
++CONFIG_PREALLOC_MQ_MSGS=32
++CONFIG_MQ_MAXMSGSIZE=32
++
++#
+ # Stack and heap information
+ #
+ CONFIG_IDLETHREAD_STACKSIZE=1024
+@@ -603,6 +609,9 @@ CONFIG_ARA_GPIO=y
+ CONFIG_ARA_BRIDGE_PINSHARE=y
+ # CONFIG_ARA_BRIDGE_BRINGUP is not set
+ # CONFIG_SERVICE_MANAGER is not set
++CONFIG_NKLABS_LAB1=y
++CONFIG_NKLABS_LAB2=y
++CONFIG_NKLABS_LAB3=y
+ CONFIG_GREYBUS_UTILS=y
+ # CONFIG_GREYBUS_DEBUG is not set
+ CONFIG_MANIFEST_ALL=y
