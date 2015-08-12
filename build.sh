@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
-#configs/ara/bridge/es1-debug-apbridgea/defconfig
-TARGET="ara bridge/es1-debug-apbridgea"
+#configs/ara/bridge/es1-debug-apbridgea-nklabs/defconfig
+TARGET="ara bridge/es1-debug-apbridgea-nklabs"
 BUILD=build_ara_image.sh
 
 if [ ! -d nuttx/apps/ara/nklabs ]; then
