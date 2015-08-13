@@ -10,6 +10,11 @@ if [ ! -d manifesto ]; then
   git clone https://github.com/projectara/manifesto
 fi
 
+if [ ! -d flashrom ]; then
+git clone https://github.com/projectara/flashrom.git
+make -C flashrom
+fi
+
 if [ ! -d nuttx ]; then
   git clone git@github.com:nklabs/Nuttx.git nuttx
 fi
